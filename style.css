@@ -1,0 +1,201 @@
+/* ===== Base ===== */
+:root {
+  --page-bg: #f4f5f7;
+  --panel-bg: #ffffff;
+  --border: #e2e4e8;
+  --text: #222831;
+  --muted: #6b7280;
+  --stage: #d2bc8f;
+  --in-cart: #2f3640;
+  --unavailable: #d9d9d6;
+  --seat-size: 22px;
+  --seat-gap: 4px;
+  --aisle: 28px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Elements with the hidden attribute must stay hidden, even if a class sets display to some value. */
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: var(--text);
+  background: var(--page-bg);
+}
+
+h1, h2, h3 {
+  margin: 0;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* Page layout */
+.site-header {
+  padding: 16px 24px;
+  background: var(--panel-bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.site-header h1 {
+  font-size: 1.5rem;
+}
+
+.site-header p {
+  margin: 4px 0 0;
+  color: var(--muted);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 16px;
+  padding: 16px 24px;
+}
+
+/* Map */
+.map-area {
+  position: relative;
+}
+
+.map {
+  position: relative;
+  height: calc(100vh - 140px);
+  min-height: 420px;
+  overflow: hidden;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.venue {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max-content;
+  padding: 24px;
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+  transition: transform 0.2s ease;
+}
+
+.stage {
+  width: 330px;
+  margin: 0 auto;
+  padding: 24px 0 32px;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  background: var(--stage);
+  border-radius: 0 0 30% 30%;
+}
+
+/* Map controls */
+.map-controls {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, 40px);
+  grid-template-areas:
+    "zoomin  up    zoomout"
+    "left    reset right"
+    ".       down  .";
+  gap: 6px;
+}
+
+.control {
+  height: 40px;
+  font-size: 1.2rem;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.control:hover:not(:disabled) {
+  background: var(--page-bg);
+}
+
+.control:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.control[data-action="zoom-in"]    { grid-area: zoomin; }
+.control[data-action="zoom-out"]   { grid-area: zoomout; }
+.control[data-action="move-up"]    { grid-area: up; }
+.control[data-action="move-left"]  { grid-area: left; }
+.control[data-action="reset"]      { grid-area: reset; }
+.control[data-action="move-right"] { grid-area: right; }
+.control[data-action="move-down"]  { grid-area: down; }
+
+/* Sidebar panels */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.panel {
+  padding: 16px;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.panel h2 {
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+}
+
+.details {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 16px;
+  margin: 0 0 16px;
+}
+
+.details dt {
+  color: var(--muted);
+}
+
+.details dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.btn {
+  padding: 8px 12px;
+  font: inherit;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--panel-bg);
+  cursor: pointer;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 12px;
+  font-weight: 700;
+  color: #ffffff;
+  background: var(--text);
+  border-color: var(--text);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-small {
+  padding: 4px 8px;
+  font-size: 0.85rem;
+}
