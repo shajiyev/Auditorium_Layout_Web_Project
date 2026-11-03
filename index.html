@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auditorium Tickets</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>Auditorium Tickets</h1>
+    <p>Click a seat to see its details, then press ADD TO CART.</p>
+  </header>
+
+  <main class="layout">
+    <section class="map-area" aria-label="Venue map">
+      <div class="map" id="map">
+        <div class="venue" id="venue">
+          <div class="stage">Stage</div>
+          <ul class="legend" id="legend"></ul>
+          <div class="seating" id="seating"></div>
+        </div>
+      </div>
+
+      <div class="map-controls" role="group" aria-label="Map controls">
+        <button type="button" class="control" data-action="zoom-in" aria-label="Zoom in" title="Zoom in"> + </button>
+        <button type="button" class="control" data-action="zoom-out" aria-label="Zoom out" title="Zoom out"> - </button>
+        <button type="button" class="control" data-action="move-up" aria-label="Move up" title="Move up"> ↑ </button>
+        <button type="button" class="control" data-action="move-left" aria-label="Move left" title="Move left"> ← </button>
+        <button type="button" class="control" data-action="reset" aria-label="Reset and center view" title="Reset / center view"> ⟲ </button>
+        <button type="button" class="control" data-action="move-right" aria-label="Move right" title="Move right"> → </button>
+        <button type="button" class="control" data-action="move-down" aria-label="Move down" title="Move down"> ↓ </button>
+      </div>
+    </section>
+
+    <aside class="sidebar">
+      <section class="panel" aria-labelledby="details-title">
+        <h2 id="details-title">Seat details</h2>
+        <p id="details-empty" class="muted">Click a seat on the map to see its details.</p>
+        <dl id="details-list" class="details" hidden>
+          <dt>Row</dt><dd id="detail-row"></dd>
+          <dt>Seat</dt><dd id="detail-seat"></dd>
+          <dt>Category</dt><dd id="detail-category"></dd>
+          <dt>Area</dt><dd id="detail-area"></dd>
+          <dt>Price</dt><dd id="detail-price"></dd>
+          <dt>Status</dt><dd id="detail-status"></dd>
+        </dl>
+        <button type="button" id="add-to-cart" class="btn btn-primary" disabled>ADD TO CART</button>
+      </section>
+
+      <section class="panel" aria-labelledby="cart-title">
+        <h2 id="cart-title">Your cart (<span id="cart-count">0</span>)</h2>
+        <p id="cart-empty" class="muted">No tickets selected yet.</p>
+        <ul id="cart-list" class="cart-list"></ul>
+        <p class="cart-total">Total: <strong id="cart-total">₼0</strong></p>
+      </section>
+    </aside>
+  </main>
+</body>
+</html>
