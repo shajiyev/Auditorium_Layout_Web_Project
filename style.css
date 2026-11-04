@@ -97,6 +97,74 @@ h1, h2, h3 {
   border-radius: 0 0 30% 30%;
 }
 
+/* Sections, rows and blocks */
+.section {
+  margin-top: 24px;
+}
+
+.section-premium {
+  margin-top: 56px; /* the balcony is separated from the floor */
+}
+
+.section-title {
+  margin-bottom: 8px;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.section-grid {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  column-gap: var(--aisle);
+  row-gap: 6px;
+}
+
+.row-label {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.block {
+  display: flex;
+  gap: var(--seat-gap);
+}
+
+.block-left {
+  justify-self: end;
+}
+
+.block-center {
+  justify-self: center;
+}
+
+.block-right {
+  justify-self: start;
+}
+
+/* Seats and their states */
+.seat {
+  width: var(--seat-size);
+  height: var(--seat-size);
+  padding: 0;
+  border: 0;
+  border-radius: 5px;
+  background: var(--seat-color);
+  color: #ffffff;
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.seat:hover:not(:disabled) {
+  transform: scale(1.15);
+}
+
 /* Map controls */
 .map-controls {
   position: absolute;
