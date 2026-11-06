@@ -214,7 +214,7 @@ h1, h2, h3 {
 .seat.is-inspected {
   position: relative;
   z-index: 1;
-  outline: 2px solid var(--text);
+  outline: 2.5px solid var(--text);
   outline-offset: 1px;
 }
 
