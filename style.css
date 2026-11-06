@@ -97,6 +97,44 @@ h1, h2, h3 {
   border-radius: 0 0 30% 30%;
 }
 
+/* Legend */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 16px;
+  margin: 16px 0 8px;
+  padding: 0;
+  list-style: none;
+  font-size: 0.85rem;
+}
+
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  background: var(--seat-color);
+}
+
+.legend-swatch.is-inspected {
+  outline: 2px solid var(--text);
+  outline-offset: 1px;
+}
+
+.legend-swatch.is-in-cart {
+  background: var(--in-cart);
+}
+
+.legend-swatch.is-unavailable {
+  background: var(--unavailable);
+}
+
 /* Sections, rows and blocks */
 .section {
   margin-top: 24px;
@@ -163,6 +201,27 @@ h1, h2, h3 {
 
 .seat:hover:not(:disabled) {
   transform: scale(1.15);
+}
+
+.seat.is-in-cart {
+  background: var(--in-cart);
+}
+
+.seat.is-in-cart::after {
+  content: "✓";
+}
+
+.seat.is-inspected {
+  position: relative;
+  z-index: 1;
+  outline: 3px solid var(--text);
+  outline-offset: 2px;
+  transform: scale(1.2);
+}
+
+.seat:disabled {
+  background: var(--unavailable);
+  cursor: not-allowed;
 }
 
 /* Map controls */

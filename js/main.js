@@ -5,6 +5,7 @@ function handleSeatClick(seatId) {
 }
 
 function init() {
+  renderLegend(document.getElementById("legend"));
   renderVenue(document.getElementById("seating"), handleSeatClick);
 }
 

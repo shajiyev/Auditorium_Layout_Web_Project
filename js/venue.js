@@ -94,3 +94,53 @@ function updateSeatLabel(button, seat, status) {
   button.setAttribute("aria-label", text);
   button.title = text;
 }
+
+// Marks seat as "selected" or "in cart" 
+function setSeatState(seatId, state) {
+  const seat = getSeat(seatId);
+  const button = document.querySelector(`.seat[data-seat-id="${seatId}"]`);
+  if (!seat || !button) {
+    return;
+  }
+
+  button.classList.toggle("is-inspected", state.inspected);
+  button.classList.toggle("is-in-cart", state.inCart);
+  updateSeatLabel(button, seat, getSeatStatus(seat, state.inCart));
+}
+
+// returns "available" or "in cart" or "unavailable"
+function getSeatStatus(seat, inCart) {
+  if (seat.unavailable) {
+    return "unavailable";
+  }
+  return inCart ? "in cart" : "available";
+}
+
+
+// These two function build the legend with info below the stage
+
+function createLegendItem(text, stateClass, color) {
+  const item = document.createElement("li");
+  const swatch = document.createElement("span");
+  swatch.className = `legend-swatch ${stateClass}`.trim();
+  if (color) {
+    swatch.style.setProperty("--seat-color", color);
+  }
+  item.appendChild(swatch);
+  item.appendChild(document.createTextNode(text));
+  return item;
+}
+
+function renderLegend(legendElement) {
+  Object.values(CATEGORIES).forEach((category) => {
+    legendElement.appendChild(
+      createLegendItem(`${category.name} ${formatPrice(category.price)}`, "", category.color)
+    );
+  });
+
+  legendElement.appendChild(createLegendItem("Selected", "is-inspected", "#ffffff"));
+  legendElement.appendChild(createLegendItem("In cart", "is-in-cart", ""));
+  legendElement.appendChild(createLegendItem("Unavailable", "is-unavailable", ""));
+}
+
+
