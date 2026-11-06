@@ -214,9 +214,8 @@ h1, h2, h3 {
 .seat.is-inspected {
   position: relative;
   z-index: 1;
-  outline: 3px solid var(--text);
-  outline-offset: 2px;
-  transform: scale(1.2);
+  outline: 2px solid var(--text);
+  outline-offset: 1px;
 }
 
 .seat:disabled {
