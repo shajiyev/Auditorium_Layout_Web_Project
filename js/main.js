@@ -63,6 +63,12 @@ function init() {
   renderLegend(document.getElementById("legend"));
   renderVenue(document.getElementById("seating"), handleSeatClick);
   renderDetails();
+
+  initNavigation(
+    document.getElementById("map"),
+    document.getElementById("venue"),
+    document.querySelector(".map-controls")
+  );
 }
 
 init();
