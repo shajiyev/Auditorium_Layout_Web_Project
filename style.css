@@ -351,3 +351,32 @@ h1, h2, h3 {
   font-size: 1.1rem;
   text-align: right;
 }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 12px;
+  }
+
+  .map {
+    height: 60vh;
+    min-height: 360px;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-header {
+    padding: 12px;
+  }
+
+  .map-controls {
+    right: 8px;
+    bottom: 8px;
+    grid-template-columns: repeat(3, 36px);
+  }
+
+  .control {
+    height: 36px;
+  }
+}
