@@ -3,6 +3,7 @@
 const ZOOM_FACTOR = 1.25; 
 const MIN_SCALE = 0.2;
 const MAX_SCALE = 3;
+const MOVE_STEP = 80; // pixels per click
 
 const view = { scale: 1, x: 0, y: 0 };
 
@@ -28,12 +29,25 @@ function handleControl(action) {
   switch (action) {
     case "zoom-in":    zoomBy(ZOOM_FACTOR); break;
     case "zoom-out":   zoomBy(1 / ZOOM_FACTOR); break;
+    // "Move up" shows the part of the venue above, so the venue itself moves down.
+    case "move-up":    moveBy(0, MOVE_STEP); break;
+    case "move-down":  moveBy(0, -MOVE_STEP); break;
+    case "move-left":  moveBy(MOVE_STEP, 0); break;
+    case "move-right": moveBy(-MOVE_STEP, 0); break;
     case "reset":      resetView(); break;
   }
 }
 
 function zoomBy(factor) {
   view.scale = clamp(view.scale * factor, MIN_SCALE, MAX_SCALE);
+  keepVenueVisible();
+  applyView();
+}
+
+function moveBy(dx, dy) {
+  view.x += dx;
+  view.y += dy;
+  keepVenueVisible();
   applyView();
 }
 
@@ -47,6 +61,14 @@ function resetView() {
   view.x = 0;
   view.y = 0;
   applyView();
+}
+
+// The venue's centre may move at most half of its (scaled) size away from the map centre, so part of the venue always stays on screen.
+function keepVenueVisible() {
+  const maxX = (venueElement.offsetWidth * view.scale) / 2;
+  const maxY = (venueElement.offsetHeight * view.scale) / 2;
+  view.x = clamp(view.x, -maxX, maxX);
+  view.y = clamp(view.y, -maxY, maxY);
 }
 
 function applyView() {
