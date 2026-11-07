@@ -35,8 +35,11 @@ function handleSeatClick(seatId) {
 }
 
 function handleAddToCart() {
-  if (inspectedSeatId && addToCart(inspectedSeatId)) {
-    updateAfterCartChange(inspectedSeatId);
+  const seatId = inspectedSeatId;
+  if (seatId && addToCart(seatId)) {
+    // An added seat is no longer selected, so it shows only as "in cart" on the map.
+    inspectedSeatId = null;
+    updateAfterCartChange(seatId);
   }
 }
 

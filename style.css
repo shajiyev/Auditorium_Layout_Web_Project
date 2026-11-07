@@ -203,6 +203,11 @@ h1, h2, h3 {
   transform: scale(1.15);
 }
 
+.seat:disabled {
+  background: var(--unavailable);
+  cursor: not-allowed;
+}
+
 .seat.is-in-cart {
   background: var(--in-cart);
 }
@@ -216,11 +221,6 @@ h1, h2, h3 {
   z-index: 1;
   outline: 2.5px solid var(--text);
   outline-offset: 1px;
-}
-
-.seat:disabled {
-  background: var(--unavailable);
-  cursor: not-allowed;
 }
 
 /* Map controls */

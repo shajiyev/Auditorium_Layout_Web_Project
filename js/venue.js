@@ -105,6 +105,8 @@ function setSeatState(seatId, state) {
 
   button.classList.toggle("is-inspected", state.inspected);
   button.classList.toggle("is-in-cart", state.inCart);
+  // A seat in the cart cannot be clicked again, only removed from the cart.
+  button.disabled = seat.unavailable || state.inCart;
   updateSeatLabel(button, seat, getSeatStatus(seat, state.inCart));
 }
 
