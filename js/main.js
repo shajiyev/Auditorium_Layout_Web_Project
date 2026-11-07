@@ -27,10 +27,22 @@ function handleSeatClick(seatId) {
   renderDetails();
 }
 
+function handleAddToCart() {
+  if (inspectedSeatId && addToCart(inspectedSeatId)) {
+    updateAfterCartChange(inspectedSeatId);
+  }
+}
+
+// This keeps the map, the cart and the details panel in sync.
+function updateAfterCartChange(seatId) {
+  refreshSeat(seatId);
+  renderDetails();
+}
+
 function refreshSeat(seatId) {
   setSeatState(seatId, {
     inspected: seatId === inspectedSeatId,
-    inCart: false, // the cart is added in the next tasks
+    inCart: isInCart(seatId),
   });
 }
 
@@ -47,16 +59,17 @@ function renderDetails() {
   }
 
   const category = CATEGORIES[seat.category];
+  const inCart = isInCart(seat.id);
 
   detailsElements.row.textContent = seat.row;
   detailsElements.seat.textContent = seat.number;
   detailsElements.category.textContent = category.name;
   detailsElements.area.textContent = category.area;
   detailsElements.price.textContent = formatPrice(category.price);
-  detailsElements.status.textContent = getSeatStatus(seat, false);
+  detailsElements.status.textContent = getSeatStatus(seat, inCart);
 
-  addToCartButton.disabled = seat.unavailable;
-  addToCartButton.textContent = "ADD TO CART";
+  addToCartButton.disabled = inCart || seat.unavailable;
+  addToCartButton.textContent = inCart ? "ALREADY IN CART" : "ADD TO CART";
 }
 
 function init() {
@@ -69,6 +82,8 @@ function init() {
     document.getElementById("venue"),
     document.querySelector(".map-controls")
   );
+
+  addToCartButton.addEventListener("click", handleAddToCart);
 }
 
 init();
