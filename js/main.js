@@ -93,6 +93,8 @@ function init() {
   renderLegend(document.getElementById("legend"));
   renderVenue(document.getElementById("seating"), handleSeatClick);
 
+  loadCart();
+  getCartSeatIds().forEach(refreshSeat);
   renderCart(cartElements);
   renderDetails();
 

@@ -1,5 +1,7 @@
 // Prices and names are always looked up from the venue data.
 
+const STORAGE_KEY = "venueCart";
+
 let cartSeatIds = [];
 
 function isInCart(seatId) {
@@ -13,11 +15,13 @@ function addToCart(seatId) {
     return false;
   }
   cartSeatIds.push(seatId);
+  saveCart();
   return true;
 }
 
 function removeFromCart(seatId) {
   cartSeatIds = cartSeatIds.filter((id) => id !== seatId);
+  saveCart();
 }
 
 function getCartSeatIds() {
@@ -26,6 +30,25 @@ function getCartSeatIds() {
 
 function getCartTotal() {
   return cartSeatIds.reduce((total, id) => total + CATEGORIES[getSeat(id).category].price, 0);
+}
+
+function saveCart() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(cartSeatIds));
+  } catch (error) {
+    console.warn("Could not save the cart:", error);
+  }
+}
+
+// Restores the cart from localStorage.
+function loadCart() {
+  try {
+    const savedIds = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    cartSeatIds = Array.isArray(savedIds) ? savedIds : [];
+  } catch (error) {
+    console.warn("Saved cart was invalid and has been ignored.");
+    cartSeatIds = [];
+  }
 }
 
 // Draws the cart list, ticket count and total.
