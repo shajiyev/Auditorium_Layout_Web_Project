@@ -13,6 +13,13 @@ const detailsElements = {
   status: document.getElementById("detail-status"),
 };
 
+const cartElements = {
+  list: document.getElementById("cart-list"),
+  count: document.getElementById("cart-count"),
+  total: document.getElementById("cart-total"),
+  empty: document.getElementById("cart-empty"),
+};
+
 const addToCartButton = document.getElementById("add-to-cart");
 
 // A seat click only inspects the seat and never changes the cart.
@@ -33,8 +40,18 @@ function handleAddToCart() {
   }
 }
 
+function handleCartClick(event) {
+  const removeButton = event.target.closest("button[data-seat-id]");
+  if (removeButton) {
+    const seatId = removeButton.dataset.seatId;
+    removeFromCart(seatId);
+    updateAfterCartChange(seatId);
+  }
+}
+
 // This keeps the map, the cart and the details panel in sync.
 function updateAfterCartChange(seatId) {
+  renderCart(cartElements);
   refreshSeat(seatId);
   renderDetails();
 }
@@ -75,6 +92,8 @@ function renderDetails() {
 function init() {
   renderLegend(document.getElementById("legend"));
   renderVenue(document.getElementById("seating"), handleSeatClick);
+
+  renderCart(cartElements);
   renderDetails();
 
   initNavigation(
@@ -84,6 +103,7 @@ function init() {
   );
 
   addToCartButton.addEventListener("click", handleAddToCart);
+  cartElements.list.addEventListener("click", handleCartClick);
 }
 
 init();

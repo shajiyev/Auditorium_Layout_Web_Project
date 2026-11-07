@@ -325,3 +325,29 @@ h1, h2, h3 {
   padding: 4px 8px;
   font-size: 0.85rem;
 }
+
+/* Cart */
+.cart-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.cart-price {
+  font-weight: 600;
+}
+
+.cart-total {
+  margin: 12px 0 0;
+  font-size: 1.1rem;
+  text-align: right;
+}
