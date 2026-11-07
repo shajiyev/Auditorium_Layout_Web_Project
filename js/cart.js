@@ -40,15 +40,26 @@ function saveCart() {
   }
 }
 
-// Restores the cart from localStorage.
+// Restores the cart from localStorage. Anything invalid is ignored: broken JSON, unknown seat ids, unavailable seats and duplicates.
 function loadCart() {
+  let savedIds = [];
   try {
-    const savedIds = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-    cartSeatIds = Array.isArray(savedIds) ? savedIds : [];
+    savedIds = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
   } catch (error) {
     console.warn("Saved cart was invalid and has been ignored.");
-    cartSeatIds = [];
   }
+
+  if (!Array.isArray(savedIds)) {
+    savedIds = [];
+  }
+
+  cartSeatIds = [];
+  savedIds.forEach((id) => {
+    const seat = getSeat(id);
+    if (seat && !seat.unavailable && !isInCart(id)) {
+      cartSeatIds.push(id);
+    }
+  });
 }
 
 // Draws the cart list, ticket count and total.

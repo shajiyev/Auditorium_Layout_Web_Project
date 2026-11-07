@@ -52,6 +52,18 @@ function handleCartClick(event) {
   }
 }
 
+// Escape clears the current inspection.
+function handleKeydown(event) {
+  if (event.key === "Escape" && inspectedSeatId) {
+    const previousSeatId = inspectedSeatId;
+    inspectedSeatId = null;
+    refreshSeat(previousSeatId);
+    renderDetails();
+    // Also drop keyboard focus, otherwise the focus outline stays on the seat
+    document.activeElement.blur();
+  }
+}
+
 // This keeps the map, the cart and the details panel in sync.
 function updateAfterCartChange(seatId) {
   renderCart(cartElements);
@@ -109,6 +121,7 @@ function init() {
 
   addToCartButton.addEventListener("click", handleAddToCart);
   cartElements.list.addEventListener("click", handleCartClick);
+  document.addEventListener("keydown", handleKeydown);
 }
 
 init();
