@@ -24,6 +24,14 @@ function removeFromCart(seatId) {
   saveCart();
 }
 
+// Removes every ticket and returns the ids that were in the cart.
+function clearCart() {
+  const removedIds = cartSeatIds;
+  cartSeatIds = [];
+  saveCart();
+  return removedIds;
+}
+
 function getCartSeatIds() {
   return [...cartSeatIds];
 }
@@ -73,6 +81,7 @@ function renderCart(elements) {
   elements.count.textContent = cartSeatIds.length;
   elements.total.textContent = formatPrice(getCartTotal());
   elements.empty.hidden = cartSeatIds.length > 0;
+  elements.clear.hidden = cartSeatIds.length === 0;
 }
 
 function createCartItem(seat) {

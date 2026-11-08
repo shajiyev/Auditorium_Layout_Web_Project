@@ -18,6 +18,7 @@ const cartElements = {
   count: document.getElementById("cart-count"),
   total: document.getElementById("cart-total"),
   empty: document.getElementById("cart-empty"),
+  clear: document.getElementById("clear-cart"),
 };
 
 const addToCartButton = document.getElementById("add-to-cart");
@@ -50,6 +51,16 @@ function handleCartClick(event) {
     removeFromCart(seatId);
     updateAfterCartChange(seatId);
   }
+}
+
+function handleClearCart() {
+  if (!confirm("Remove all tickets from the cart?")) {
+    return;
+  }
+  const removedIds = clearCart();
+  renderCart(cartElements);
+  removedIds.forEach(refreshSeat);
+  renderDetails();
 }
 
 // Escape clears the current inspection.
@@ -121,6 +132,7 @@ function init() {
 
   addToCartButton.addEventListener("click", handleAddToCart);
   cartElements.list.addEventListener("click", handleCartClick);
+  cartElements.clear.addEventListener("click", handleClearCart);
   document.addEventListener("keydown", handleKeydown);
 }
 
