@@ -96,6 +96,7 @@ function initMouseNavigation() {
   mapElement.addEventListener("pointerdown", handlePointerDown);
   window.addEventListener("pointermove", handlePointerMove);
   window.addEventListener("pointerup", handlePointerUp);
+  window.addEventListener("pointercancel", handlePointerUp);
 
   // A drag must not count as a seat click. This runs before the seat's click handler.
   mapElement.addEventListener("click", (event) => {
@@ -111,16 +112,18 @@ function handleWheel(event) {
   zoomBy(event.deltaY < 0 ? ZOOM_FACTOR : 1 / ZOOM_FACTOR);
 }
 
+// Works with the mouse (left button only), a finger or a pen.
 function handlePointerDown(event) {
-  if (event.pointerType !== "mouse" || event.button !== 0) {
-    return;
+  const isSecondFinger = dragStart && event.pointerId !== dragStart.pointerId;
+  if ((event.pointerType === "mouse" && event.button !== 0) || isSecondFinger) {
+    return; // ignore other mouse buttons and a second finger
   }
-  dragStart = { mouseX: event.clientX, mouseY: event.clientY, viewX: view.x, viewY: view.y };
+  dragStart = { pointerId: event.pointerId, mouseX: event.clientX, mouseY: event.clientY, viewX: view.x, viewY: view.y };
   wasDragged = false;
 }
 
 function handlePointerMove(event) {
-  if (!dragStart) {
+  if (!dragStart || event.pointerId !== dragStart.pointerId) {
     return;
   }
   const dx = event.clientX - dragStart.mouseX;
@@ -138,7 +141,10 @@ function handlePointerMove(event) {
   applyView();
 }
 
-function handlePointerUp() {
+function handlePointerUp(event) {
+  if (!dragStart || event.pointerId !== dragStart.pointerId) {
+    return;
+  }
   dragStart = null;
   mapElement.classList.remove("is-dragging");
 }

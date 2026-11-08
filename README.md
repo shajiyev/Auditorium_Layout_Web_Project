@@ -16,6 +16,7 @@ Web & Mobile I course with plain **HTML, CSS and JavaScript** .
 - Seat states: available, selected, in cart, unavailable
 - Map controls: zoom in/out, move up/down/left/right, reset/center view
 - Mouse navigation: zoom with the mouse wheel, move the map by clicking and dragging
+  (on phones and tablets the map can be dragged with a finger)
 - Cart with ticket list, total price and remove buttons — always in sync with the map
 - **Clear cart** button (with a confirmation) to empty the whole cart at once
 - No duplicate tickets; unavailable seats and seats already in the cart cannot be selected

@@ -361,6 +361,11 @@ h1, h2, h3 {
 }
 
 /* Bonus: mouse navigation */
+/* On touch screens a finger on the map moves the map instead of scrolling the page. */
+.map {
+  touch-action: none;
+}
+
 /* The map keeps the normal arrow cursor; only while dragging it shows the closed hand, also over seats. */
 .map.is-dragging,
 .map.is-dragging * {
