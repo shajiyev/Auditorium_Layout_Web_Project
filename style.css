@@ -362,6 +362,19 @@ h1, h2, h3 {
   margin-top: 12px;
 }
 
+/* Bonus: mouse navigation */
+.map {
+  cursor: grab;
+}
+
+.map.is-dragging {
+  cursor: grabbing;
+}
+
+.map.is-dragging .venue {
+  transition: none; /* follow the mouse without delay */
+}
+
 /* Responsive */
 @media (max-width: 900px) {
   .layout {

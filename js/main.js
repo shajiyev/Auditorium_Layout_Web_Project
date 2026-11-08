@@ -24,9 +24,10 @@ const cartElements = {
 const addToCartButton = document.getElementById("add-to-cart");
 
 // A seat click only inspects the seat and never changes the cart.
+// Clicking the selected seat again unselects it.
 function handleSeatClick(seatId) {
   const previousSeatId = inspectedSeatId;
-  inspectedSeatId = seatId;
+  inspectedSeatId = seatId === previousSeatId ? null : seatId;
 
   if (previousSeatId) {
     refreshSeat(previousSeatId);

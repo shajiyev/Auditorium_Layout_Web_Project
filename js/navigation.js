@@ -22,6 +22,7 @@ function initNavigation(map, venue, controlsElement) {
   });
 
   window.addEventListener("resize", resetView);
+  initMouseNavigation();
   resetView();
 }
 
@@ -81,4 +82,63 @@ function applyView() {
 
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
+}
+
+// Bonus: mouse-wheel zoom and click-drag panning
+
+const DRAG_THRESHOLD = 5; // pixels the mouse must move before it counts as a drag
+
+let dragStart = null;
+let wasDragged = false;
+
+function initMouseNavigation() {
+  mapElement.addEventListener("wheel", handleWheel, { passive: false });
+  mapElement.addEventListener("pointerdown", handlePointerDown);
+  window.addEventListener("pointermove", handlePointerMove);
+  window.addEventListener("pointerup", handlePointerUp);
+
+  // A drag must not count as a seat click. This runs before the seat's click handler.
+  mapElement.addEventListener("click", (event) => {
+    if (wasDragged) {
+      event.stopPropagation();
+      wasDragged = false;
+    }
+  }, true);
+}
+
+function handleWheel(event) {
+  event.preventDefault(); // zoom the map instead of scrolling the page
+  zoomBy(event.deltaY < 0 ? ZOOM_FACTOR : 1 / ZOOM_FACTOR);
+}
+
+function handlePointerDown(event) {
+  if (event.pointerType !== "mouse" || event.button !== 0) {
+    return;
+  }
+  dragStart = { mouseX: event.clientX, mouseY: event.clientY, viewX: view.x, viewY: view.y };
+  wasDragged = false;
+}
+
+function handlePointerMove(event) {
+  if (!dragStart) {
+    return;
+  }
+  const dx = event.clientX - dragStart.mouseX;
+  const dy = event.clientY - dragStart.mouseY;
+
+  if (!wasDragged && Math.hypot(dx, dy) < DRAG_THRESHOLD) {
+    return; // tiny movement
+  }
+
+  wasDragged = true;
+  mapElement.classList.add("is-dragging");
+  view.x = dragStart.viewX + dx;
+  view.y = dragStart.viewY + dy;
+  keepVenueVisible();
+  applyView();
+}
+
+function handlePointerUp() {
+  dragStart = null;
+  mapElement.classList.remove("is-dragging");
 }
